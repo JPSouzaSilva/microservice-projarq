@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GatewayApplication<gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.usguri.gateway.GatewayApplication",
+            "projectName": "gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<trabalho.um>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.projarq.trabalho.um.Application",
+            "projectName": "trabalho.um",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

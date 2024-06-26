@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./apigateway
+    image: openjdk:8-jdk-alpine
+    ports:
+      - "6924:6924"
+
+  name-server:
+    build: ./name-server
+    image: openjdk:8-jdk-alpine
+    ports:
+      - "8761:8761"
+    depends_on:
+      - api-gateway
+
+  projarq-monolito:
+    build: ./projarq-t1
+    image: openjdk:8-jdk-alpine
+    ports: 
+      - "1313:1313"
+    depends_on:
+      - rabbitmq
+      - postgres
+
+  asscache:
+    build: ./asscache
+    image: openjdk:8-jdk-alpine
+    ports:
+      - "2469:2469"
+    depends_on:
+      - projarq-monolito
+   
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: admin  
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: xanflis
+    ports:
+      - "5432:5432"
+    networks:
+      - xanflis-network
+      
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - xanflis-network
+
+networks:
+  xanflis-network:
